@@ -64,7 +64,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.7.0</version>
                 <configuration>
-                    <mainClass>com.example.TgBotZuliApplication</mainClass>
+                    <mainClass>com.example.tgbotzuli.TgBotZuliApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
