@@ -9,5 +9,7 @@ services:
       - key: BOT_TOKEN
         fromSecret: true
         secret: RENDER_BOT_TOKEN
+      - key: BOT_USERNAME
+        fromSecret: true
       - key: PORT
         value: 8080
