@@ -39,7 +39,6 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
-            log.info("New message received: " + update.getMessage().getText());
             log.info("Message: " + update);
             Message message = update.getMessage();
             Long chatId = message.getChatId();
@@ -47,6 +46,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
             // Обработка ответов на предыдущие сообщения
             if (userStates.containsKey(chatId)) {
+                log.info("User: " + userStates.get(chatId));
                 String previousState = userStates.get(chatId);
                 handleUserResponse(chatId, text, previousState);
                 userStates.remove(chatId);
@@ -62,25 +62,33 @@ public class MyTelegramBot extends TelegramLongPollingBot {
                 log.info("Starting bot");
                 sendStartMessage(chatId);
                 break;
+            case "/calendar":
+                log.info("Calendar");
+                sandCalendarMsg(chatId);
+                break;
+            case "/reserve":
+                log.info("Reserve");
+                sendMessage(chatId, "Запись на тренировку скоро будет доступна\uD83D\uDE0A");
+                break;
+            case "/info":
+                sendMessage(chatId, "Расскажу про мои тренировки...");
+                break;
             case "/login":
                 log.info("Logged in");
                 startSurvey(chatId);
                 break;
             default:
-                sendMessage(chatId, "Неизвестная команда");
+                sendMessage(chatId, "\uD83E\uDD14 ???");
         }
     }
 
     private void sendStartMessage(Long chatId) {
-        SendMessage message = new SendMessage();
-        message.setChatId(chatId.toString());
-        message.setText("Приветик! Это бот Zuli❤" +
+        sendMessage(chatId, "Приветик! Это бот Zuli❤\n" +
                 "Смотри расписание тренировок, записывайся и приходи тренить\uD83D\uDE09");
-        try {
-            execute(message);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
+    }
+
+    private void sandCalendarMsg(Long chatId) {
+        sendMessage(chatId, "Следующая тренировка будет проходить <дата> в <место>. Записывайся\uD83D\uDC83");
     }
 
     private void startSurvey(Long chatId) {
@@ -110,7 +118,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     private void askForAge(Long chatId, String name) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId.toString());
-        message.setText("Спасибо, " + name + "! Сколько вам лет?");
+        message.setText("Спасибо, " + name + "! Как давно тренируешься?");
 
         try {
             execute(message);
@@ -123,7 +131,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     private void finishSurvey(Long chatId, String age) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId.toString());
-        message.setText("Спасибо за ответы! Ваш возраст: " + age);
+        message.setText("Спасибо за ответы! Твой опыт в тренировках: " + age);
 
         try {
             execute(message);
