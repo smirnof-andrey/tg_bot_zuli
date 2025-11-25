@@ -73,8 +73,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
                 break;
             case "/reserve":
                 log.info("Reserve");
-                sendMessage(chatId, "Понедельники 8, 15 и 22 декабря, с 20:30 до 21:30\n" +
-                        "Студия Dance Real Project (ТЦ Жар-Птица, минус 2й этаж)");
+                sendMessage(chatId, "Запись на тренировку скоро будет доступна\uD83D\uDE0A");
                 break;
             case "/info":
                 sendMessage(chatId, "Расскажу про мои тренировки...");
