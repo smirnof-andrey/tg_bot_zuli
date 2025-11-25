@@ -25,6 +25,9 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     @Value("${bot.username}")
     private String botUsername;
 
+    @Value("${bot.text.calendarText}")
+    private String calendarText;
+
     @Override
     public String getBotUsername() {
         return botUsername;
@@ -64,7 +67,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
                 break;
             case "/calendar":
                 log.info("Calendar");
-                sandCalendarMsg(chatId);
+                sendMessage(chatId, calendarText);
                 break;
             case "/reserve":
                 log.info("Reserve");
