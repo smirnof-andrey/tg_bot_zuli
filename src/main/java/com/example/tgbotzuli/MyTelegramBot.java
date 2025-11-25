@@ -38,11 +38,13 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         return botToken;
     }
 
-
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
-            log.info("Message: " + update);
+            log.info("Message: " + update.getMessage().getFrom().getFirstName() +
+                    " " + update.getMessage().getFrom().getLastName() +
+                    " " + update.getMessage().getFrom().getUserName()+
+                    " text: " + update.getMessage().getText());
             Message message = update.getMessage();
             Long chatId = message.getChatId();
             String text = message.getText();
@@ -71,7 +73,8 @@ public class MyTelegramBot extends TelegramLongPollingBot {
                 break;
             case "/reserve":
                 log.info("Reserve");
-                sendMessage(chatId, "Запись на тренировку скоро будет доступна\uD83D\uDE0A");
+                sendMessage(chatId, "Понедельники 8, 15 и 22 декабря, с 20:30 до 21:30\n" +
+                        "Студия Dance Real Project (ТЦ Жар-Птица, минус 2й этаж)");
                 break;
             case "/info":
                 sendMessage(chatId, "Расскажу про мои тренировки...");
