@@ -12,7 +12,7 @@ public class ConfigValidator implements ApplicationListener<ApplicationReadyEven
 
     private static final Logger log = LoggerFactory.getLogger(ConfigValidator.class);
 
-    @Value("${BOT_TOKEN:}")
+    @Value("${bot.token}")
     private String botToken;
 
     @Override

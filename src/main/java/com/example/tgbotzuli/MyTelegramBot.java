@@ -19,7 +19,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     private final Map<Long, String> userStates = new HashMap<>();
 
-    @Value("${BOT_TOKEN}")
+    @Value("${bot.token}")
     private String botToken;
 
     @Value("${bot.username}")
@@ -31,11 +31,6 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         return botUsername;
-    }
-
-    @Override
-    public String getBotToken() {
-        return botToken;
     }
 
     @Override

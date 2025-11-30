@@ -11,7 +11,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 public class BotConfig {
     private final String botToken;
 
-    public BotConfig(@Value("${BOT_TOKEN}") String botToken) {
+    public BotConfig(@Value("${bot.token}") String botToken) {
         if (botToken == null || botToken.equals("default_fallback_token")) {
             throw new IllegalStateException("BOT_TOKEN not configured properly");
         }
