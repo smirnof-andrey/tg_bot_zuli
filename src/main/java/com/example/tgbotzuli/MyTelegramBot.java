@@ -25,9 +25,6 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     @Value("${bot.username}")
     private String botUsername;
 
-    @Value("${bot.text.calendarText}")
-    private String calendarText;
-
     @Override
     public String getBotUsername() {
         return botUsername;
@@ -69,7 +66,8 @@ public class MyTelegramBot extends TelegramLongPollingBot {
                 break;
             case "/calendar":
                 log.info("Calendar");
-                sendMessage(chatId, calendarText);
+                sendMessage(chatId, "Понедельники 8, 15 и 22 декабря, с 20:30 до 21:30\n" +
+                        "Студия Dance Real Project (ТЦ Жар-Птица, минус 2й этаж)");
                 break;
             case "/reserve":
                 log.info("Reserve");
