@@ -1,4 +1,4 @@
-package com.example.tgbotzuli;
+package com.example.tgbotzuli.validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,7 @@ public class ConfigValidator implements ApplicationListener<ApplicationReadyEven
 
     private static final Logger log = LoggerFactory.getLogger(ConfigValidator.class);
 
-    @Value("${bot.token}")
+    @Value("${telegram.bot.token}")
     private String botToken;
 
     @Override

@@ -14,15 +14,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@Component
+//@Component
 public class MyTelegramBot extends TelegramLongPollingBot {
 
     private final Map<Long, String> userStates = new HashMap<>();
 
-    @Value("${bot.token}")
+    @Value("${telegram.bot.token}")
     private String botToken;
 
-    @Value("${bot.username}")
+    @Value("${telegram.bot.username}")
     private String botUsername;
 
     @Override

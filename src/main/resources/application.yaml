@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: tgBotZuli
+
+  # Конфигурация JPA
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+
+# Telegram Bot конфигурация
+telegram:
+  bot:
+    token: ${BOT_TOKEN}
+    username: ${BOT_USERNAME}
+    path: /
+server:
+  port: 8081
+
+# Конфигурация базы данных (будет переопределено в docker профиле)
+spring.datasource:
+  url: jdbc:postgresql://localhost:5432/tg_zuli_db
+  username: ${DB_USER}
+  password: ${DB_PASSWORD}
+#  driver-class-name: org.postgresql.Driver
+  hikari:
+    maximum-pool-size: 10
+    minimum-idle: 5
+    connection-timeout: 30000
+
+# Actuator для мониторинга
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# Логирование
+logging:
+  level:
+    com.example.bot: DEBUG
+    org.springframework: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.telegram: DEBUG
+  file:
+    name: /app/logs/application.log
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

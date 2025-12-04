@@ -1,5 +1,6 @@
-package com.example.tgbotzuli;
+package com.example.tgbotzuli.config;
 
+import com.example.tgbotzuli.MyTelegramBot;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +14,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 public class BotConfig {
     private final String botToken;
 
-    public BotConfig(@Value("${bot.token}") String botToken) {
+    public BotConfig(@Value("${telegram.bot.token}") String botToken) {
         log.info("BotToken: " + botToken);
         if (botToken == null || botToken.equals("default_fallback_token")) {
             throw new IllegalStateException("BOT_TOKEN not configured properly");

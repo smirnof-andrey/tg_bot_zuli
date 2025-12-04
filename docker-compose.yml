@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: telegram-bot-postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME:-telegram_bot_db}
+      POSTGRES_USER: ${DB_USER:-bot_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme123}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - bot-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-bot_user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  telegram-bot:
+    build: .
+    container_name: telegram-bot-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      BOT_TOKEN: ${BOT_TOKEN}
+      BOT_USERNAME: ${BOT_USERNAME}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-telegram_bot_db}
+      DB_USER: ${DB_USER:-bot_user}
+      DB_PASSWORD: ${DB_PASSWORD:-changeme123}
+    ports:
+      - "8081:8081"
+    networks:
+      - bot-network
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+
+#  pgadmin:  # Опционально: веб-интерфейс для БД
+#    image: dpage/pgadmin4
+#    container_name: telegram-bot-pgadmin
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@example.com}
+#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin123}
+#    ports:
+#      - "5050:80"
+#    networks:
+#      - bot-network
+#    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  bot-network:
+    driver: bridge

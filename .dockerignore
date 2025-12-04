@@ -1,0 +1,14 @@
+.git
+.gitignore
+*.md
+target/
+*.jar
+*.war
+*.ear
+.idea
+*.iml
+logs/
+tmp/
+.DS_Store
+.env
+docker-compose.override.yml

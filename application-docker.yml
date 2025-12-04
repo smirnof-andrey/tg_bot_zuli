@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:postgres}:${DB_PORT:5432}/${DB_NAME:telegram_bot_db}
+    username: ${DB_USER:bot_user}
+    password: ${DB_PASSWORD}
+    hikari:
+      connection-timeout: 60000
+      initialization-fail-timeout: 60000
+
+server:
+  port: 8081
