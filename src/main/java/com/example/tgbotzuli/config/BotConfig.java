@@ -1,6 +1,6 @@
 package com.example.tgbotzuli.config;
 
-import com.example.tgbotzuli.MyTelegramBot;
+import com.example.tgbotzuli.service.TelegramBotService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ public class BotConfig {
     }
 
     @Bean
-    public TelegramBotsApi telegramBotsApi(MyTelegramBot bot) throws TelegramApiException {
+    public TelegramBotsApi telegramBotsApi(TelegramBotService bot) throws TelegramApiException {
         log.info("TelegramBot: " + bot.getBotUsername() + ", " + bot.getBotToken());
         TelegramBotsApi api = new TelegramBotsApi(DefaultBotSession.class);
         api.registerBot(bot);
